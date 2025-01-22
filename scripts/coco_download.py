@@ -51,5 +51,7 @@ if __name__ == "__main__":
     save_dir = "../coco_dataset"
     
     # Download and extract the dataset
-    download_and_extract_coco(dataset_type, save_dir)
+    # download_and_extract_coco(dataset_type, save_dir)
+    download_and_extract_coco("annotations", save_dir)
+    
 
