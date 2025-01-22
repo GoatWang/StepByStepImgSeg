@@ -47,11 +47,13 @@ def download_and_extract_coco(dataset_type, save_dir):
 
 if __name__ == "__main__":
     # Set the dataset type and directory
-    dataset_type = "val2017"  # Options: 'train2017', 'val2017', 'test2017', 'annotations'
+    # dataset_type = "val2017"  # Options: 'train2017', 'val2017', 'test2017', 'annotations'
     save_dir = "../coco_dataset"
     
     # Download and extract the dataset
-    # download_and_extract_coco(dataset_type, save_dir)
+    # download_and_extract_coco("train2017", save_dir)
+    download_and_extract_coco("val2017", save_dir)
+    # download_and_extract_coco("test2017", save_dir)
     download_and_extract_coco("annotations", save_dir)
     
 

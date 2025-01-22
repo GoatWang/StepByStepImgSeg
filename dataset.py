@@ -15,13 +15,14 @@ image_transform = transforms.Compose([
 
 # PyTorch Dataset Class
 class ImageQADataset(Dataset):
-    def __init__(self, metadata): # , transform=None # TODO: when batch transform is implemented, the
+    def __init__(self, metadata, tokenizer): # , transform=None # TODO: when batch transform is implemented, the
         """
         Args:
             metadata (list): A list of dictionaries with keys 'image_path', 'question', and 'answer'.
             transform (callable, optional): Transform to be applied to each image.
         """
         self.metadata = metadata
+        self.tokenizer = tokenizer
         self.transform = image_transform
 
     def __len__(self):
@@ -30,8 +31,20 @@ class ImageQADataset(Dataset):
     def __getitem__(self, idx):
         item = self.metadata[idx]
         image_path = item["image_path"]
-        question = item["question"]
-        answer = item["answer"]
+        question = self.tokenizer(
+            item["question"],
+            padding="max_length",
+            truncation=True,
+            max_length=128,
+            return_tensors="pt",
+        )
+        answer = self.tokenizer(
+            item["answer"],
+            padding="max_length",
+            truncation=True,
+            max_length=128,
+            return_tensors="pt",
+        )
 
         # Load and transform the image
         try:

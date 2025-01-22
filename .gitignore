@@ -2,3 +2,5 @@ coco_dataset
 .vscode
 .DS_Store
 venv
+.ipynb_checkpoints
+__pycache__
