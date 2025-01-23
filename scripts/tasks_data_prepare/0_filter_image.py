@@ -67,9 +67,9 @@ def filter_training_data(img_dir, anno_dir, save_dir):
 # Example usage:
 # filter_training_data('path/to/img_dir', 'path/to/anno_dir', 'path/to/save_dir')
 if __name__ == "__main__":
-    img_dir = "../coco_dataset/val2017"
-    anno_dir = "../coco_dataset/val2017_0_mask"
-    save_dir = "../coco_dataset/val2017_1_imgmask_filtered"
+    img_dir = "../../coco_dataset/val2017"
+    anno_dir = "../../coco_dataset/val2017_0_mask"
+    save_dir = "../../coco_dataset/val2017_1_imgmask_filtered"
     filter_training_data(img_dir, anno_dir, save_dir)
 
 

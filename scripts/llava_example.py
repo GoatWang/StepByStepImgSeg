@@ -3,7 +3,7 @@ import requests
 from PIL import Image
 from transformers import AutoProcessor, LlavaForConditionalGeneration
 
-device = torch.device("mps")
+# device = torch.device("mps")
 
 
 model_name = "llava-hf/llava-1.5-7b-hf"
@@ -13,8 +13,7 @@ model = LlavaForConditionalGeneration.from_pretrained(
 )
 
 # Load an image from a URL or local path
-img_fp = "../coco_dataset/val2017_task1_horizontal_locate/000000000139.jpg"
-# img_fp = "../coco_dataset/val2017_task2_vertical_locate/000000000139.jpg"
+img_fp = "../coco_dataset/val2017_2_task1_horizontal_locate/000000000285.jpg"
 image = Image.open(img_fp)
 
 # Define your question

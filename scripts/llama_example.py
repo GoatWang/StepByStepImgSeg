@@ -3,7 +3,7 @@ import requests
 from PIL import Image
 from transformers import MllamaForConditionalGeneration, AutoProcessor
 
-device = torch.device("mps")
+# device = torch.device("mps")
 
 # model_id = "meta-llama/Llama-3.2-11B-Vision" # 
 model_id = "meta-llama/Llama-3.2-11B-Vision-Instruct"
@@ -27,7 +27,7 @@ processor = AutoProcessor.from_pretrained(model_id) # , low_cpu_mem_usage=True
 
 
 # coco example
-img_fp = "../coco_dataset/val2017_task1_horizontal_locate/000000000139.jpg"
+img_fp = "../coco_dataset/val2017_2_task1_horizontal_locate/000000000285.jpg"
 image = Image.open(img_fp)
 
 prompt = "<|image|><|begin_of_text|>Can you identify the center of refrigerator is in which block (from 0 to 9). Please just reply one number."

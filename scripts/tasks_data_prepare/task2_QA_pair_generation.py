@@ -59,9 +59,9 @@ def sort_imgmask_into_qa_pair_task2(imgmask_dir, task1_img_dir, qa_pairs_file):
         json.dump(qa_pairs, f)
         
 if __name__  == "__main__":
-    imgmask_dir = "../coco_dataset/val2017_1_imgmask_filtered"
-    task1_img_dir = "../coco_dataset/val2017_2_task2_vertical_locate"
-    qa_pairs_file = "../coco_dataset/val2017_2_task2_qapair.json"
+    imgmask_dir = "../../coco_dataset/val2017_1_imgmask_filtered"
+    task1_img_dir = "../../coco_dataset/val2017_2_task2_vertical_locate"
+    qa_pairs_file = "../../coco_dataset/val2017_2_task2_qapair.json"
     sort_imgmask_into_qa_pair_task2(imgmask_dir, task1_img_dir, qa_pairs_file)
 
 

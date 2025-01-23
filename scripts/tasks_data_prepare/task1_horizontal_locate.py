@@ -3,9 +3,9 @@ import cv2
 import numpy as np
 from pathlib import Path
 
-def draw_horizontal_lines_and_blocks(img_fp_src, img_fp_dst):
+def draw_vertical_lines_and_blocks(img_fp_src, img_fp_dst):
     """
-    Draws 9 vertical red lines to separate an image into 10 horizontal blocks, 
+    Draws 9 vertical red lines to separate an image into 10 vertical blocks, 
     numbers them from 0 to 9, and saves the resulting image to the destination path.
 
     Parameters:
@@ -20,8 +20,8 @@ def draw_horizontal_lines_and_blocks(img_fp_src, img_fp_dst):
     # Get image dimensions
     height, width = image.shape[:2]
 
-    # Calculate block height
-    block_height = height // 10
+    # Calculate block width
+    block_width = width // 10
 
     # Font and text settings
     font = cv2.FONT_HERSHEY_SIMPLEX
@@ -32,14 +32,14 @@ def draw_horizontal_lines_and_blocks(img_fp_src, img_fp_dst):
     # Draw 9 vertical lines and add text
     for i in range(10):
         if i < 9:  # Draw vertical lines (exclude the last boundary line)
-            y = (i + 1) * block_height
-            cv2.line(image, (0, y), (width, y), (0, 0, 255), 2)  # Red line
+            x = (i + 1) * block_width
+            cv2.line(image, (x, 0), (x, height), (0, 0, 255), 2)  # Red line
 
         # Calculate text position
         text = str(i)
         text_size = cv2.getTextSize(text, font, font_scale, font_thickness)[0]
-        text_x = (width - text_size[0]) // 2  # Center horizontally
-        text_y = (i * block_height + (block_height + text_size[1]) // 2)  # Center vertically
+        text_x = (i * block_width + (block_width - text_size[0]) // 2)  # Center horizontally in block
+        text_y = (height + text_size[1]) // 2  # Center vertically
 
         # Put the text on the image
         cv2.putText(image, text, (text_x, text_y), font, font_scale, text_color, font_thickness)
@@ -47,18 +47,18 @@ def draw_horizontal_lines_and_blocks(img_fp_src, img_fp_dst):
     # Save the modified image
     cv2.imwrite(img_fp_dst, image)
 
+
 if __name__ == "__main__":
     import glob 
-    img_dir = "../coco_dataset/val2017_1_imgmask_filtered"
-    save_dir = "../coco_dataset/val2017_2_task2_vertical_locate"
+    img_dir = "../../coco_dataset/val2017_1_imgmask_filtered"
+    save_dir = "../../coco_dataset/val2017_2_task1_horizontal_locate"
     Path(save_dir).mkdir(exist_ok=True, parents=True)
 
     img_fps = glob.glob(os.path.join(img_dir, "*.jpg"))
     for img_fp_src in img_fps:
         img_fn = os.path.basename(img_fp_src)
         img_fp_dst  = os.path.join(save_dir, img_fn)
-        draw_horizontal_lines_and_blocks(img_fp_src, img_fp_dst)
-
+        draw_vertical_lines_and_blocks(img_fp_src, img_fp_dst)    
 
 
 
