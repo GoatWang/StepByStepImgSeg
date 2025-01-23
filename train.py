@@ -35,8 +35,9 @@ if __name__ == "__main__":
 
     # Load the LLaVA model and tokenizer
     model_name = "llava-hf/llava-1.5-7b-hf"
-    tokenizer = LlamaTokenizer.from_pretrained(model_name)
-    # model = AutoModelForVision2Seq.from_pretrained(model_name)
+    cache_directory = "/notebooks/.cache/huggingface/hub"
+    tokenizer = LlamaTokenizer.from_pretrained(model_name, cache_dir=cache_directory)
+    model = AutoModelForVision2Seq.from_pretrained(model_name, cache_dir=cache_directory)
 
     # Load dataset
     train_dataset, val_dataset, test_dataset = load_dataset(meta_fps, tokenizer)
@@ -44,33 +45,33 @@ if __name__ == "__main__":
     print("len(val_dataset): ", len(val_dataset))
     print("len(test_dataset): ", len(test_dataset))
 
-    # # Training arguments
-    # training_args = TrainingArguments(
-    #     output_dir="./llava-qa-model",
-    #     evaluation_strategy="steps",
-    #     learning_rate=2e-5,
-    #    per_device_train_batch_size=4,
-    #     num_train_epochs=3,
-    #     weight_decay=0.01,
-    #     save_steps=500,
-    #     save_total_limit=2,
-    #     logging_dir="./logs",
-    #     fp16=True,  # Use mixed precision for faster training if supported
-    #     report_to="tensorboard",
-    # )
+    # Training arguments
+    training_args = TrainingArguments(
+        output_dir="./llava-qa-model",
+        evaluation_strategy="steps",
+        learning_rate=2e-5,
+        per_device_train_batch_size=4,
+        num_train_epochs=3,
+        weight_decay=0.01,
+        save_steps=500,
+        save_total_limit=2,
+        logging_dir="./logs",
+        fp16=True,  # Use mixed precision for faster training if supported
+        report_to="tensorboard"
+    )
 
-    # # Define the Trainer
-    # trainer = Trainer(
-    #     model=model,
-    #     args=training_args,
-    #     train_dataset=tokenized_dataset["train"],
-    #     eval_dataset=tokenized_dataset["validation"],
-    #     tokenizer=tokenizer,
-    # )
+    # Define the Trainer
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=train_dataset,
+        eval_dataset=val_dataset,
+        tokenizer=tokenizer
+    )
 
-    # # Fine-tune the model
-    # trainer.train()
+    # Fine-tune the model
+    trainer.train()
 
-    # # Save the fine-tuned model
-    # trainer.save_model("./llava-qa-model")
-    # tokenizer.save_pretrained("./llava-qa-model")
+    # Save the fine-tuned model
+    trainer.save_model("./llava-qa-model")
+    tokenizer.save_pretrained("./llava-qa-model")

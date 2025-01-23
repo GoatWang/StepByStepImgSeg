@@ -7,13 +7,14 @@ from transformers import MllamaForConditionalGeneration, AutoProcessor
 
 # model_id = "meta-llama/Llama-3.2-11B-Vision" # 
 model_id = "meta-llama/Llama-3.2-11B-Vision-Instruct"
-
+cache_directory = "/notebooks/.cache/huggingface/hub"  # Specify your custom path
 model = MllamaForConditionalGeneration.from_pretrained(
     model_id,
     torch_dtype=torch.bfloat16,
     device_map="auto",
+    cache_dir=cache_directory
 )
-processor = AutoProcessor.from_pretrained(model_id) # , low_cpu_mem_usage=True
+processor = AutoProcessor.from_pretrained(model_id, cache_dir=cache_directory) # , low_cpu_mem_usage=True
 
 # official example
 # url = "https://huggingface.co/datasets/huggingface/documentation-images/resolve/0052a70beed5bf71b92610a43a52df6d286cd5f3/diffusers/rabbit.jpg"

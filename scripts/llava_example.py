@@ -7,10 +7,13 @@ from transformers import AutoProcessor, LlavaForConditionalGeneration
 
 
 model_name = "llava-hf/llava-1.5-7b-hf"
-processor = AutoProcessor.from_pretrained(model_name)
+cache_directory = "/notebooks/.cache/huggingface/hub"  # Specify your custom path
+processor = AutoProcessor.from_pretrained(model_name, cache_dir=cache_directory)
 model = LlavaForConditionalGeneration.from_pretrained(
-    model_name, torch_dtype=torch.float16, device_map="auto"
+    model_name, torch_dtype=torch.float16, device_map="auto", cache_dir=cache_directory
 )
+print("model.hf_device_map", model.hf_device_map)
+
 
 # Load an image from a URL or local path
 img_fp = "../coco_dataset/val2017_2_task1_horizontal_locate/000000000285.jpg"
