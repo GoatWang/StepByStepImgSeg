@@ -7,7 +7,7 @@ from transformers import AutoProcessor, LlavaForConditionalGeneration
 
 
 model_name = "llava-hf/llava-1.5-7b-hf"
-cache_directory = "/notebooks/.cache/huggingface/hub"  # Specify your custom path
+cache_directory = "../.cache/huggingface/hub"  # Specify your custom path
 processor = AutoProcessor.from_pretrained(model_name, cache_dir=cache_directory)
 model = LlavaForConditionalGeneration.from_pretrained(
     model_name, torch_dtype=torch.float16, device_map="auto", cache_dir=cache_directory

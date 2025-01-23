@@ -1,8 +1,10 @@
-coco_dataset
+.cache
 .vscode
 .DS_Store
-venv
 .ipynb_checkpoints
 __pycache__
+
+venv
+coco_dataset
 temp
 logs

@@ -2,6 +2,8 @@ import os
 import cv2
 import glob 
 import json
+import numpy as np
+from matplotlib import pyplot as plt
 
 # since all labels with multiple same-class objects has been filtered out
 def read_json_as_centroid_dict(json_fp) -> dict:
@@ -25,8 +27,6 @@ def read_json_as_centroid_dict(json_fp) -> dict:
     
     return centroid_dict
 
-import numpy as np
-from matplotlib import pyplot as plt
 def sort_imgmask_into_qa_pair_task2(imgmask_dir, task1_img_dir, qa_pairs_file):
     qa_pairs = []
     img_fps = sorted(glob.glob(os.path.join(imgmask_dir, "*.jpg")))
@@ -40,11 +40,21 @@ def sort_imgmask_into_qa_pair_task2(imgmask_dir, task1_img_dir, qa_pairs_file):
 
         centroid_dict = read_json_as_centroid_dict(json_fp)
 
-        for obj_name, obj_centroid in centroid_dict.items():
+        for idx, (obj_name, obj_centroid) in enumerate(centroid_dict.items()):
+            id_str = os.path.basename(img_fp).replace(".jpg", "") + "_task2_" + str(idx).zfill(2) + "_" + obj_name
             qa_pair = {
-                "image_path": img_fp,
-                "question": f"Can you identify the center of {obj_name} is in which block (from 0 to 9). Please reply just one number.",
-                "answer": f"{obj_centroid[1] // height_blk}"
+                "id": id_str,
+                "image": img_fp,
+                "conversations": [
+                    {
+                        "from": "human",
+                        "value": f"<image>\nCan you identify the center of {obj_name} is in which block (from 0 to 9). Please reply just one number."
+                    },
+                    {
+                        "from": "gpt",
+                        "value": f"{obj_centroid[1] // height_blk}"
+                    },
+                ]
             }
             qa_pairs.append(qa_pair)
 

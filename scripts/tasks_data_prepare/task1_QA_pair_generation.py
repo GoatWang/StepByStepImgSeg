@@ -2,6 +2,8 @@ import os
 import cv2
 import glob 
 import json
+import numpy as np
+from matplotlib import pyplot as plt
 
 # since all labels with multiple same-class objects has been filtered out
 def read_json_as_centroid_dict(json_fp) -> dict:
@@ -25,8 +27,6 @@ def read_json_as_centroid_dict(json_fp) -> dict:
     
     return centroid_dict
 
-import numpy as np
-from matplotlib import pyplot as plt
 def sort_imgmask_into_qa_pair_task1(imgmask_dir, task1_img_dir, qa_pairs_file):
     qa_pairs = []
     img_fps = sorted(glob.glob(os.path.join(imgmask_dir, "*.jpg")))
@@ -39,11 +39,21 @@ def sort_imgmask_into_qa_pair_task1(imgmask_dir, task1_img_dir, qa_pairs_file):
         height_blk, width_blk = height / 10, width / 10
 
         centroid_dict = read_json_as_centroid_dict(json_fp)
-        for obj_name, obj_centroid in centroid_dict.items():
+        for idx, (obj_name, obj_centroid) in enumerate(centroid_dict.items()):
+            id_str = os.path.basename(img_fp).replace(".jpg", "") + "_task1_" + str(idx).zfill(2) + "_" + obj_name
             qa_pair = {
-                "image_path": img_fp,
-                "question": f"Can you identify the center of {obj_name} is in which block (from 0 to 9). Please reply just one number.",
-                "answer": f"{obj_centroid[0] // width_blk}"
+                "id": id_str,
+                "image": img_fp,
+                "conversations": [
+                    {
+                        "from": "human",
+                        "value": f"<image>\nCan you identify the center of {obj_name} is in which block (from 0 to 9). Please reply just one number."
+                    },
+                    {
+                        "from": "gpt",
+                        "value": f"{obj_centroid[0] // width_blk}"
+                    },
+                ]
             }
             qa_pairs.append(qa_pair)
 
@@ -67,12 +77,20 @@ if __name__  == "__main__":
 
 # Read metadata (QA pairs)
 # Example metadata.json structure:
-# {
-#     "image1.jpg": [
-#         {"question": "What is in the image?", "answer": "A cat"},
-#         {"question": "What color is the object?", "answer": "Brown"}
-#     ],
-#     "image2.jpg": [
-#         {"question": "What color is the sky?", "answer": "Blue"}
+# [
+#   {
+#     "id": "997bb945-628d-4724-b370-b84de974a19f",
+#     "image": "part-000001/997bb945-628d-4724-b370-b84de974a19f.jpg",
+#     "conversations": [
+#       {
+#         "from": "human",
+#         "value": "<image>\nWrite a prompt for Stable Diffusion to generate this image."
+#       },
+#       {
+#         "from": "gpt",
+#         "value": "a beautiful painting of chernobyl by nekro, pascal blanche, john harris, greg rutkowski, sin jong hun, moebius, simon stalenhag. in style of cg art. ray tracing. cel shading. hyper detailed. realistic. ue 5. maya. octane render. "
+#       },
 #     ]
-# }
+#   },
+#   ...
+# ]
