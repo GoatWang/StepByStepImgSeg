@@ -51,7 +51,7 @@ def sort_imgmask_into_qa_pair_task1(imgmask_dir, task1_img_dir, qa_pairs_file):
                     },
                     {
                         "from": "gpt",
-                        "value": f"{obj_centroid[0] // width_blk}"
+                        "value": f"{int(obj_centroid[0] // width_blk)}"
                     },
                 ]
             }
