@@ -2,7 +2,10 @@ apt install -y tmux
 pip install transformers -U
 pip install pycocotools
 pip install 'accelerate>=0.26.0'
+pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.3/flash_attn-2.7.3+cu11torch2.1cxx11abiFALSE-cp311-cp311-linux_x86_64.whl
 
+# sudo apt update
+# sudo apt install -y libcudart11.0
 # install flash attention 2: ImportError: FlashAttention2 has been toggled on, but it cannot be used due to the following error: the package flash_attn seems to be not installed. Please refer to the documentation of https://huggingface.co/docs/transformers/perf_infer_gpu_one#flashattention-2 to install Flash Attention 2.
 # pip install flash-attn --no-build-isolation
 
@@ -11,5 +14,6 @@ if [ ! -e "/notebooks/StepByStepImgSeg/temp/LLaVA" ]; then
     cd /notebooks/StepByStepImgSeg/temp
     git clone https://github.com/haotian-liu/LLaVA
 fi
-export PYTHONPATH=/notebooks/StepByStepImgSeg/temp/llava:$PYTHONPATH
+echo "export PYTHONPATH=/notebooks/StepByStepImgSeg/temp/llava:$PYTHONPATH" >> ~/.bashrc
+
 
