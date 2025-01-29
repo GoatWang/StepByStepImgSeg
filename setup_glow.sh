@@ -14,4 +14,10 @@ wandb login 427974ce1dec11546ede262db4206a90fcf9ce00
 export PYTHONPATH=/notebooks/StepByStepImgSeg/temp/llava:$PYTHONPATH
 echo "export PYTHONPATH=/notebooks/StepByStepImgSeg/temp/llava:$PYTHONPATH" >> ~/.bashrc
 
+mkdir -p temp
+if [ ! -e "temp/LLaVA" ]; then
+    cd temp
+    git clone https://github.com/haotian-liu/LLaVA
+fi
 huggingface-cli download liuhaotian/llava-v1.5-mlp2x-336px-pretrain-vicuna-7b-v1.5 --local-dir /root/StepByStepImgSeg/temp/LLaVA/checkpoints/vicuna-7b-v1.5-pretrain
+

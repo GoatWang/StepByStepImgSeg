@@ -1,0 +1,10 @@
+[
+    {
+        "img_dir": "../../coco_dataset/val2017",
+        "mask_dir": "../../coco_dataset/val2017_0_mask",
+        "imgmask_filtered_dir": "../../coco_dataset/val2017_1_imgmask_filtered",
+        "task1_img_dir": "../../coco_dataset/val2017_2_task1_horizontal_locate",
+        "task1_qapair_dir": "../../coco_dataset/val2017_2_task1_horizontal_locate",
+    
+    }
+]
