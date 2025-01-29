@@ -14,6 +14,6 @@ if [ ! -e "/notebooks/StepByStepImgSeg/temp/LLaVA" ]; then
     cd /notebooks/StepByStepImgSeg/temp
     git clone https://github.com/haotian-liu/LLaVA
 fi
-echo "export PYTHONPATH=/notebooks/StepByStepImgSeg/temp/llava:$PYTHONPATH" >> ~/.bashrc
+# echo "export PYTHONPATH=/notebooks/StepByStepImgSeg/temp/llava:$PYTHONPATH" >> ~/.bashrc
 
 

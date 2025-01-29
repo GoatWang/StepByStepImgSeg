@@ -3,12 +3,12 @@
 deepspeed llava/train/train_mem.py \
     --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
     --deepspeed ./scripts/zero3_offload.json \
-    --model_name_or_path lmsys/vicuna-13b-v1.5 \
+    --model_name_or_path lmsys/vicuna-7b-v1.5 \
     --version v1 \
-    --data_path /notebooks/StepByStepImgSeg/coco_dataset/val2017_3_all_qapairs.json \
+    --data_path ../../coco_dataset/val2017_3_all_qapairs.json \
     --image_folder / \
     --vision_tower openai/clip-vit-large-patch14-336 \
-    --pretrain_mm_mlp_adapter ./checkpoints/llava-v1.5-13b-pretrain/mm_projector.bin \
+    --pretrain_mm_mlp_adapter ./checkpoints/vicuna-7b-v1.5-pretrain/mm_projector.bin \
     --mm_projector_type mlp2x_gelu \
     --mm_vision_select_layer -2 \
     --mm_use_im_start_end False \
@@ -16,7 +16,7 @@ deepspeed llava/train/train_mem.py \
     --image_aspect_ratio pad \
     --group_by_modality_length True \
     --bf16 True \
-    --output_dir ./checkpoints/llava-v1.5-13b-lora \
+    --output_dir ./checkpoints/llava-7b-v1.5-lora \
     --num_train_epochs 1 \
     --per_device_train_batch_size 4 \
     --per_device_eval_batch_size 4 \
@@ -36,3 +36,4 @@ deepspeed llava/train/train_mem.py \
     --dataloader_num_workers 4 \
     --lazy_preprocess True \
     --report_to wandb
+
