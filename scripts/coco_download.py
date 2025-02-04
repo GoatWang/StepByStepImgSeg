@@ -42,7 +42,7 @@ def download_and_extract_coco(dataset_type, save_dir):
     print(f"Extracted {dataset_type} to {save_dir}")
     
     # Optionally delete the zip file
-    os.remove(zip_path)
+    # os.remove(zip_path)
     print(f"Deleted {zip_path}")
 
 if __name__ == "__main__":

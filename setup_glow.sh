@@ -8,6 +8,7 @@ pip3 install peft
 pip3 install sentencepiece
 pip3 install protobuf
 pip3 install wandb
+pip3 install flash-attn --no-build-isolation
 
 wandb login 427974ce1dec11546ede262db4206a90fcf9ce00
 

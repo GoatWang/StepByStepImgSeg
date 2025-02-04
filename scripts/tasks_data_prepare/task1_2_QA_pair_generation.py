@@ -27,7 +27,7 @@ def read_json_as_centroid_dict(json_fp) -> dict:
     
     return centroid_dict
 
-def sort_imgmask_into_qa_pair_task1(imgmask_dir, task1_img_dir, qa_pairs_file):
+def sort_imgmask_into_qa_pair_task1(imgmask_dir, task1_img_dir, task1_qapair_fp):
     qa_pairs = []
     img_fps = sorted(glob.glob(os.path.join(imgmask_dir, "*.jpg")))
     json_fps = sorted(glob.glob(os.path.join(imgmask_dir, "*.json")))
@@ -64,14 +64,18 @@ def sort_imgmask_into_qa_pair_task1(imgmask_dir, task1_img_dir, qa_pairs_file):
             # plt.scatter([obj_centroid[0]], [obj_centroid[1]])
             # plt.show()
 
-    with open(qa_pairs_file, 'w') as f:
+    with open(task1_qapair_fp, 'w') as f:
         json.dump(qa_pairs, f)
         
 if __name__  == "__main__":
-    imgmask_dir = "../../coco_dataset/val2017_1_imgmask_filtered"
-    task1_img_dir = "../../coco_dataset/val2017_2_task1_horizontal_locate"
-    qa_pairs_file = "../../coco_dataset/val2017_2_task1_qapair.json"
-    sort_imgmask_into_qa_pair_task1(imgmask_dir, task1_img_dir, qa_pairs_file)
+    with open("datafiles.json", "r") as f:
+        datafiles = json.load(f)
+
+    for datafile in datafiles:
+        imgmask_dir = datafile['imgmask_filtered_dir']
+        task1_img_dir = datafile['task1_img_dir']
+        task1_qapair_fp = datafile['task1_qapair_fp']
+        sort_imgmask_into_qa_pair_task1(imgmask_dir, task1_img_dir, task1_qapair_fp)
 
 
 

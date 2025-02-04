@@ -2,11 +2,13 @@ import json
 
 if __name__ == "__main__":
     # Path to metadata files
+    with open("datafiles.json", "r") as f:
+        datafiles = f.read()
     meta_fps = [
-        "../../coco_dataset/val2017_2_task1_qapair.json",
-        "../../coco_dataset/val2017_2_task2_qapair.json"
+        datafiles['task1_qapair_fp'],
+        datafiles['task2_qapair_fp']
     ]
-    meta_fp_dist = "../../coco_dataset/val2017_3_all_qapairs.json"
+    meta_fp_dist = datafiles['all_qapair_fp']
 
     # Load metadata from JSON files
     metadata = []

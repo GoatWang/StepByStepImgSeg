@@ -4,16 +4,16 @@ import json
 import shutil
 from PIL import Image
 
-def filter_training_data(img_dir, anno_dir, save_dir):
-    if not os.path.exists(save_dir):
-        os.makedirs(save_dir)
+def filter_training_data(img_dir, mask_dir, imgmask_filtered_dir):
+    if not os.path.exists(imgmask_filtered_dir):
+        os.makedirs(imgmask_filtered_dir)
 
-    for anno_file in os.listdir(anno_dir):
+    for anno_file in os.listdir(mask_dir):
         if not anno_file.endswith('.json'):
             continue
 
         # Load annotation file
-        anno_path = os.path.join(anno_dir, anno_file)
+        anno_path = os.path.join(mask_dir, anno_file)
         with open(anno_path, 'r') as f:
             anno_data = json.load(f)
 
@@ -56,20 +56,25 @@ def filter_training_data(img_dir, anno_dir, save_dir):
             anno_data['shapes'] = valid_shapes
 
             # Save the filtered annotation
-            filtered_anno_path = os.path.join(save_dir, anno_file)
+            filtered_anno_path = os.path.join(imgmask_filtered_dir, anno_file)
             with open(filtered_anno_path, 'w') as f:
                 json.dump(anno_data, f, indent=4)
 
             # Copy the image
-            filtered_img_path = os.path.join(save_dir, anno_data['imagePath'])
+            filtered_img_path = os.path.join(imgmask_filtered_dir, anno_data['imagePath'])
             shutil.copy(img_path, filtered_img_path)
 
 # Example usage:
-# filter_training_data('path/to/img_dir', 'path/to/anno_dir', 'path/to/save_dir')
+# filter_training_data('path/to/img_dir', 'path/to/mask_dir', 'path/to/imgmask_filtered_dir')
 if __name__ == "__main__":
-    img_dir = "../../coco_dataset/val2017"
-    anno_dir = "../../coco_dataset/val2017_0_mask"
-    save_dir = "../../coco_dataset/val2017_1_imgmask_filtered"
-    filter_training_data(img_dir, anno_dir, save_dir)
+    from pprint import pprint
+    with open("datafiles.json", "r") as f:
+        datafiles = json.load(f)
+
+    for datafile in datafiles:
+        img_dir = datafile["img_dir"]
+        mask_dir = datafile["mask_dir"]
+        imgmask_filtered_dir = datafile["imgmask_filtered_dir"]
+        filter_training_data(img_dir, mask_dir, imgmask_filtered_dir)
 
 

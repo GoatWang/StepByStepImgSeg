@@ -4,7 +4,10 @@
         "mask_dir": "../../coco_dataset/val2017_0_mask",
         "imgmask_filtered_dir": "../../coco_dataset/val2017_1_imgmask_filtered",
         "task1_img_dir": "../../coco_dataset/val2017_2_task1_horizontal_locate",
-        "task1_qapair_dir": "../../coco_dataset/val2017_2_task1_horizontal_locate",
-    
+        "task1_qapair_fp": "../../coco_dataset/val2017_2_task1_qapair.json",
+        "task2_img_dir": "../../coco_dataset/val2017_2_task2_vertical_locate",
+        "task2_qapair_fp": "../../coco_dataset/val2017_2_task2_qapair.json",
+        "task3_samedist_gap_dir": "../../coco_dataset/val2017_2_task3_samedist_gap_dir",
+        "all_qapair_fp": "../../coco_dataset/val2017_3_all_qapairs.json"
     }
 ]
