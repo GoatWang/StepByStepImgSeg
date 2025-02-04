@@ -1,3 +1,4 @@
+import cv2
 import json
 
 def read_labelme_annotation(json_path):
@@ -34,18 +35,37 @@ if __name__ == "__main__":
         img_mask_fp_pairs = [(img_fp, get_mask_fp(img_fp)) for img_fp in img_fps]
         
         for img_fp, mask_fp in img_mask_fp_pairs[:10]:
+            img = cv2.imread(img_fp)
             anno_data = read_labelme_annotation(mask_fp)
             for  shape in anno_data['shapes']:
                 label = shape['label']
                 points = shape['points']
                 
                 for i in range(len(points)):
+
                     points_temp = points[0]
 
                 # 1. draw the previous poiuts
+
                 # 2. draw clock ticks
                 # 3. put text on each portion
                 # 4. produce question file
+
+    # {
+    #     "id": "000000000285_task2_00_bear",
+    #     "image": "/home/wanghsuanchung/Projects/StepByStepImgSeg/coco_dataset/val2017_1_imgmask_filtered/000000000285.jpg",
+    #     "conversations": [
+    #         {
+    #             "from": "human",
+    #             "value": "<image>\nCan you identify the center of bear is in which block (from 0 to 9). Please reply just one number."
+    #         },
+    #         {
+    #             "from": "gpt",
+    #             "value": "7"
+    #         }
+    #     ]
+    # },
+
 
 
 
