@@ -1,0 +1,36 @@
+{ 
+    "preview":
+        [
+            {
+                "gap": 10,
+                "img_dir": "../coco_dataset/val2017",
+                "mask_dir": "../coco_dataset/val2017_0_mask",
+                "imgmask_filtered_dir": "../coco_dataset/val2017_1_imgmask_filtered",
+
+                "task1_1_img_dir": "../coco_dataset/preview/val2017_2_task1_1_horizontal_locate",
+                "task1_2_qapair_fp": "../coco_dataset/preview/val2017_2_task1_qapair.json",
+
+                "task2_1_img_dir": "../coco_dataset/preview/val2017_2_task2_1_vertical_locate",
+                "task2_2_qapair_fp": "../coco_dataset/preview/val2017_2_task2_qapair.json",
+
+                "task3_1_img_dir": "../coco_dataset/preview/val2017_2_task3_1_start_point_locate",
+                "task3_2_qapair_fp": "../coco_dataset/preview/val2017_2_task3_qapair.json",
+
+                "task4_1_samedist_gap_dir": "../coco_dataset/preview/val2017_2_task4_1_samedist_gap_dir",
+                "task4_2_trajectory_poly_dir": "../coco_dataset/preview/val2017_2_task4_2_trajectory_poly_dir",
+                "task4_3_qapair_fp": "../coco_dataset/preview/val2017_2_task4_qapair.json",
+
+                "all_qapair_fp": "../coco_dataset/preview/val2017_3_all_qapairs.json"
+            }
+        ],
+    "production":[
+        {
+            "gap": 10,
+            "img_dir": "../coco_dataset/val2017",
+            "mask_dir": "../coco_dataset/val2017_0_mask",
+            "imgmask_filtered_dir": "../coco_dataset/val2017_1_imgmask_filtered",
+            "imgqa_dir": "../coco_dataset/val2017_2_imgqa"
+
+        }        
+    ]
+}
