@@ -23,10 +23,10 @@ def draw_clock_ticks(img, center, tick_length, n_ticks):
         # Compute the end point for the tick line.
         x_end = int(cx + tick_length * math.cos(angle_rad))
         y_end = int(cy + tick_length * math.sin(angle_rad))
-        cv2.line(img, (cx, cy), (x_end, y_end), (0, 0, 255), 1)
+        cv2.line(img, (cx, cy), (x_end, y_end), (0, 0, 255), 2)
         x_end = int(cx + tick_length * 1.5 * math.cos(angle_rad))
         y_end = int(cy + tick_length * 1.5 * math.sin(angle_rad))
-        cv2.putText(img, str(i), (x_end, y_end), cv2.FONT_HERSHEY_SIMPLEX, 0.3, (0, 0, 255), 1)
+        cv2.putText(img, str(i), (x_end, y_end), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
 def find_closest_tickidx(center, next_pt, gap, n_ticks):
     """
@@ -69,10 +69,7 @@ def create_task4_qapair(img_fp, shp, img_fp_dst, pt_id_str, n_ticks, tickidx):
         "conversations": [
             {
                 "from": "human",
-                "value": f"""<image>\nCan you identify the most probable next point for the annotation polygon of {shp['label']}? 
-                        The black line represents the current annotated polygon (incomplete), and the polygon should enclose the object in a clockwise direction. 
-                        The red lines indicate possible directions for the next point. Based on the pattern, continuity, and shape of {shp['label']}, 
-                        which red line is the most likely direction for the next point? please answer with a number from 0 to {n_ticks-1}."""
+                "value": f"<image>\nThe image shows an incomplete annotated polygon (black line) enclosing the {shp['label']}. The polygon should be completed in a clockwise direction. There are 12 red lines indicating possible directions for the next point, numbered sequentially in a clockwise manner starting from 0 at the top and ending at {n_ticks-1}. Based on the pattern, continuity, and shape of {shp['label']}, identify the most probable direction for the next point. Please respond with a number from 0 to {n_ticks-1}."
             },
             {
                 "from": "gpt",

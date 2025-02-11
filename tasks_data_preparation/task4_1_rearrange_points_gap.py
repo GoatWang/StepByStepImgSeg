@@ -155,7 +155,7 @@ def adjust_points_gap(shp, gap, image_top=0):
         # Rotate the list so that the start point becomes the first vertex.
         new_points = new_points[idx:] + new_points[:idx]
 
-    return new_points
+    return np.array(new_points).astype(float).tolist()
 
 
 # Example usage:

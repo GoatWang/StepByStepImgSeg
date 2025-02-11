@@ -37,7 +37,7 @@ if __name__ == "__main__":
             for shp in mask_data['shapes']:
                 shp_task_dir = os.path.join(imgqa_dir, os.path.basename(img_fp).replace(".jpg", f"_{shp['shpidx']:02d}_{shp['label']}"))
                 Path(shp_task_dir).mkdir(exist_ok=True, parents=True)
-                get_img_fp_dst = lambda img_fp, task_id, shp: os.path.join(shp_task_dir, os.path.basename(shp_task_dir)+ f"_{task_id}.jpg")
+                get_img_fp_dst = lambda img_fp, task_id, shp: os.path.abspath(os.path.join(shp_task_dir, os.path.basename(shp_task_dir)+ f"_{task_id}.jpg"))
                 
                 # task1
                 img_fp_task1 = get_img_fp_dst(img_fp, "task1", shp)

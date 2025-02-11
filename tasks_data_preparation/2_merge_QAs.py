@@ -3,7 +3,8 @@ import json
 if __name__ == "__main__":
     # Path to metadata files
     with open("datafiles.json", "r") as f:
-        datafiles = f.read()
+        datafiles = f.read()['production']
+
     meta_fps = [
         datafiles['task1_qapair_fp'],
         datafiles['task2_qapair_fp']

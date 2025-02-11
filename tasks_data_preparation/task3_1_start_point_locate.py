@@ -34,7 +34,7 @@ def create_task3_qapair(img_fp, shp, img_fp_dst, nearest_tick_idx): # shp_idx, o
         "conversations": [
             {
                 "from": "human",
-                "value": f"<image>\nCan you identify which tick if the nearest one to the {shp['label']}'s boundary. Please the tick id."
+                "value": f"<image>\nA vertical ruler is drawn from the center of the {shp['label']} to the top, with each tick spaced 15 pixels apart. The ticks are numbered starting from 0 at the bottom, increasing upwards, with the ID noted on the right side of each tick. Identify the tick number that is closest to the boundary of the {shp['label']}. Please provide only the tick ID."
             },
             {
                 "from": "gpt",

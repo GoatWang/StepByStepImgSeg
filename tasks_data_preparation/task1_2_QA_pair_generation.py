@@ -21,7 +21,7 @@ def sort_imgmask_into_qa_pair_task1(img_fp, shp, img_fp_dst, img_shape):
         "conversations": [
             {
                 "from": "human",
-                "value": f"<image>\nCan you identify the center of {shp['label']} is in which block (from 0 to 9). Please reply just one number."
+                "value": f"<image>\nThe image is vertically divided into 10 equal sections, with each section numbered from 0 to 9, from left to right. Based on this division, identify which numbered block contains the center of the {shp['label']}. Please reply with only a single number."
             },
             {
                 "from": "gpt",
