@@ -2,6 +2,7 @@ import os
 import cv2
 import json
 import base64
+import numpy as np
 from pycocotools.coco import COCO
 
 def convert_coco_to_labelme(coco_annotation_file, output_dir, coco_images_dir=None):
@@ -62,7 +63,9 @@ def convert_coco_to_labelme(coco_annotation_file, output_dir, coco_images_dir=No
                 # Handle RLE format (convert to polygons)
                 elif isinstance(ann["segmentation"], dict):
                     mask = coco.annToMask(ann)
-                    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                    mask = np.ascontiguousarray(mask)
+                    _, contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # ondemand server (opencv 3.x)
+                    # contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # not ondemand server
                     for contour in contours:
                         contour = contour.squeeze(1).tolist()
                         labelme_data["shapes"].append({
@@ -80,12 +83,15 @@ def convert_coco_to_labelme(coco_annotation_file, output_dir, coco_images_dir=No
 
         print(f"Saved: {labelme_json_path}")
 
+def main():
+    with open(os.path.join(os.path.dirname(__file__), "datafiles.json"), "r") as f:
+        datafiles = json.load(f)['production']
+
+    for datafile in datafiles:
+        coco_anno_fp = datafile['coco_anno_fp']
+        img_dir = datafile['img_dir']
+        mask_dir = datafile["mask_dir"]
+        convert_coco_to_labelme(coco_anno_fp, mask_dir, img_dir) # remove coco_images_dir to disable base64 encoding
 
 if __name__ == "__main__":
-    # Paths to COCO annotation JSON and output directory
-    coco_annotation_file = "../coco_dataset/annotations/instances_val2017.json"  # Update with your file path
-    coco_images_dir = "../coco_dataset/val2017"  # Directory with COCO images (optional, for reference)
-    output_dir = "../coco_dataset/val2017_0_mask"
-
-    # Convert and save as LabelMe format
-    convert_coco_to_labelme(coco_annotation_file, output_dir, coco_images_dir) # remove coco_images_dir to disable base64 encoding
+    main()

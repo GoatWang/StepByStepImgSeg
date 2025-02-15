@@ -2,9 +2,9 @@ import os
 import json
 import glob
 
-if __name__ == "__main__":
+def main():
     # Path to metadata files
-    with open("datafiles.json", "r") as f:
+    with open(os.path.join(os.path.dirname(__file__), "datafiles.json"), "r") as f:
         datafiles = json.load(f)['production']
 
     for datafile in datafiles:
@@ -20,20 +20,18 @@ if __name__ == "__main__":
         with open(json_fp, "r") as f:
             all_qapairs.append(json.load(f))
 
-    for json_fp in json_fps_task4:
-        with open(json_fp, "r") as f:
-            all_qapairs.append(json.load(f))
+    for json_idx, json_fp in enumerate(json_fps_task4):
+        if json_idx % 10 == 0:
+            with open(json_fp, "r") as f:
+                all_qapairs.append(json.load(f))
 
     with open(meta_fp_dist, "w") as f:
         json.dump(all_qapairs, f)
 
+# 38/77873
 
-
-
-
-
-
-
+if __name__ == "__main__":
+    main()
 
 
 

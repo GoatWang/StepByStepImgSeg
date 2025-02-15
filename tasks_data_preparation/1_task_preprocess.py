@@ -1,9 +1,11 @@
 import os
 import cv2
+import sys
 import json
 import glob
 import numpy as np
 from pathlib import Path
+sys.path.append(os.path.dirname(__file__))
 from task0_utils import read_json_as_dict   
 from task1_1_horizontal_locate import draw_vertical_lines_and_blocks
 from task1_2_QA_pair_generation import sort_imgmask_into_qa_pair_task1
@@ -18,14 +20,15 @@ def save_img_and_qapair(img, qa_pair, img_fp_dst, qa_pair_fp_dst):
     with open(qa_pair_fp_dst, "w") as f:
         json.dump(qa_pair, f, indent=4)
 
-if __name__ == "__main__": 
-    with open("datafiles.json", "r") as f:
+
+def main():
+    with open(os.path.join(os.path.dirname(__file__), "datafiles.json"), "r") as f:
         datafiles = json.load(f)['production']
 
     for datafile in datafiles:
         imgmask_dir = datafile['imgmask_filtered_dir']
         imgqa_dir = datafile['imgqa_dir']
-        img_fps = sorted(glob.glob(os.path.join(imgmask_dir, "*.jpg")))[:10]
+        img_fps = sorted(glob.glob(os.path.join(imgmask_dir, "*.jpg")))
         mask_fps = sorted(glob.glob(os.path.join(imgmask_dir, "*.json")))
         for idx, (img_fp, mask_fp) in enumerate(zip(img_fps, mask_fps)):
             if idx % 100 == 0:
@@ -65,7 +68,7 @@ if __name__ == "__main__":
                 Path(img_dir_task4).mkdir(exist_ok=True, parents=True)
                 for ptidx in range(1, len(points_adjusted)):
                     pt_id_str = str(ptidx).zfill(5)
-                    img_fp_task4_pt = os.path.join(img_dir_task4, os.path.basename(img_dir_task4) + f"_{pt_id_str}" + ".jpg")
+                    img_fp_task4_pt = os.path.abspath(os.path.join(img_dir_task4, os.path.basename(img_dir_task4) + f"_{pt_id_str}" + ".jpg"))
 
                     n_ticks = 12
                     tick_length = gap * 2
@@ -74,3 +77,6 @@ if __name__ == "__main__":
                     save_img_and_qapair(img_task4_pt, qa_pair_task4_pt, img_fp_task4_pt, img_fp_task4_pt.replace(".jpg", ".json"))
 
 
+
+if __name__ == "__main__": 
+    main()

@@ -64,17 +64,20 @@ def filter_training_data(img_dir, mask_dir, imgmask_filtered_dir):
             filtered_img_path = os.path.join(imgmask_filtered_dir, anno_data['imagePath'])
             shutil.copy(img_path, filtered_img_path)
 
-# Example usage:
-# filter_training_data('path/to/img_dir', 'path/to/mask_dir', 'path/to/imgmask_filtered_dir')
-if __name__ == "__main__":
+def main():
     from pprint import pprint
-    with open("datafiles.json", "r") as f:
-        datafiles = json.load(f)
+    with open(os.path.join(os.path.dirname(__file__), "datafiles.json"), "r") as f:
+        datafiles = json.load(f)['production']
 
     for datafile in datafiles:
         img_dir = datafile["img_dir"]
         mask_dir = datafile["mask_dir"]
         imgmask_filtered_dir = datafile["imgmask_filtered_dir"]
         filter_training_data(img_dir, mask_dir, imgmask_filtered_dir)
+
+# Example usage:
+# filter_training_data('path/to/img_dir', 'path/to/mask_dir', 'path/to/imgmask_filtered_dir')
+if __name__ == "__main__":
+    main()
 
 

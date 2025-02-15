@@ -1,0 +1,5 @@
+cd /data/sandcastle/boxes/fbsource/fbcode/gsst_pcd/FloorPlanRecognition/LLaVA/CocoDataset
+buck2 run tasks_data_preparation:0_coco_parse_mask
+buck2 run tasks_data_preparation:0_filter_image
+buck2 run tasks_data_preparation:1_task_preprocess
+buck2 run tasks_data_preparation:2_merge_QAs

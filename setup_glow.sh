@@ -12,6 +12,7 @@ pip3 install flash-attn --no-build-isolation
 
 wandb login 427974ce1dec11546ede262db4206a90fcf9ce00
 
+# export PYTHONPATH=/home/wanghsuanchung/Projects/StepByStepImgSeg/temp/LLaVA:$PYTHONPATH
 export PYTHONPATH=/notebooks/StepByStepImgSeg/temp/llava:$PYTHONPATH
 echo "export PYTHONPATH=/notebooks/StepByStepImgSeg/temp/llava:$PYTHONPATH" >> ~/.bashrc
 
@@ -22,3 +23,9 @@ if [ ! -e "temp/LLaVA" ]; then
 fi
 huggingface-cli download liuhaotian/llava-v1.5-mlp2x-336px-pretrain-vicuna-7b-v1.5 --local-dir /root/StepByStepImgSeg/temp/LLaVA/checkpoints/vicuna-7b-v1.5-pretrain
 
+
+
+# wget https://developer.download.nvidia.com/compute/cudnn/9.7.1/local_installers/cudnn-local-repo-rhel9-9.7.1-1.0-1.x86_64.rpm
+# sudo rpm -i cudnn-local-repo-rhel9-9.7.1-1.0-1.x86_64.rpm
+# sudo dnf clean all
+# sudo dnf -y install cudnn

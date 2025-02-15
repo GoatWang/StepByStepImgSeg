@@ -1,0 +1,82 @@
+load("@fbcode_macros//build_defs:python_binary.bzl", "python_binary")
+
+python_binary(
+    name = "0_coco_parse_mask",
+    srcs = [
+        "0_coco_parse_mask.py",
+    ],
+    main_function = ".0_coco_parse_mask.main",
+    resources = [
+        "datafiles.json",
+    ],
+    deps = [
+        "fbsource//third-party/pypi/pycocotools:pycocotools",
+        "fbsource//third-party/pypi/numpy:numpy",
+        "fbsource//third-party/pypi/pillow:pillow",
+        "fbsource//third-party/pypi/opencv-python:opencv-python",
+    ],
+)
+
+python_binary(
+    name = "0_filter_image",
+    srcs = [
+        "0_filter_image.py",
+    ],
+    main_function = ".0_filter_image.main",
+    resources = [
+        "datafiles.json",
+    ],
+    deps = [
+        "fbsource//third-party/pypi/numba:numba",
+        "fbsource//third-party/pypi/numpy:numpy",
+        "fbsource//third-party/pypi/pillow:pillow",
+        "fbsource//third-party/pypi/opencv-python:opencv-python",
+    ],
+)
+
+python_binary(
+    name = "1_task_preprocess",
+    srcs = [
+        "1_task_preprocess.py",
+        "task0_utils.py",
+        "task1_1_horizontal_locate.py",
+        "task1_2_QA_pair_generation.py",
+        "task2_1_vertical_locate.py",
+        "task2_2_QA_pair_generation.py",
+        "task3_1_start_point_locate.py",
+        "task4_1_rearrange_points_gap.py",
+        "task4_2_draw_clock_ticks.py",
+        "utils/IncenterCentroid.py",
+    ],
+    main_function = ".1_task_preprocess.main",
+    resources = [
+        "datafiles.json",
+    ],
+    deps = [
+        "fbsource//third-party/pypi/matplotlib:matplotlib",
+        "fbsource//third-party/pypi/numba:numba",
+        "fbsource//third-party/pypi/numpy:numpy",
+        "fbsource//third-party/pypi/pillow:pillow",
+        "fbsource//third-party/pypi/opencv-python:opencv-python",
+        "fbsource//third-party/pypi/scikit-learn:scikit-learn",
+        "fbsource//third-party/pypi/scipy:scipy",
+        "fbsource//third-party/pypi/shapely:shapely",
+    ],
+)
+
+python_binary(
+    name = "2_merge_QAs",
+    srcs = [
+        "2_merge_QAs.py",
+    ],
+    main_function = ".2_merge_QAs.main",
+    resources = [
+        "datafiles.json",
+    ],
+    deps = [
+        "fbsource//third-party/pypi/numba:numba",
+        "fbsource//third-party/pypi/numpy:numpy",
+        "fbsource//third-party/pypi/pillow:pillow",
+        "fbsource//third-party/pypi/opencv-python:opencv-python",
+    ],
+)
